@@ -1,7 +1,22 @@
 #include <signal.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	print_pid(unsigned int pid)
+{
+	if (pid >= 10)
+	{
+		print_pid(pid / 10);
+		pid = pid % 10;
+	}
+	if (pid < 10)
+		ft_putchar(pid + 48);
+}
 
 void	handler(int sig)
 {
@@ -25,8 +40,10 @@ int	main(int argc, char **argv)
 {
 	signal(SIGUSR1, &handler);
 	signal(SIGUSR2, &handler);
-	printf("%d\n", getpid());
+	print_pid(getpid());
+	write(1, "\n", 1);
 	while (1)
-		pause();
+	{
+	}
 	return (0);
 }
