@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "minitalk.h"
 
 int	ft_atoi(const char *str)
 {
@@ -58,6 +56,8 @@ void	send_signals(int pid, char c)
 
 void	handler(int sig, siginfo_t *info, void *context)
 {
+	info = NULL;
+	context = NULL;
 	if (sig == SIGUSR1)
 		write(1, "well recieved\n", 14);
 	exit(0);

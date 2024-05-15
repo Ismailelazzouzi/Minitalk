@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "minitalk.h"
 
 void	ft_putchar(char c)
 {
@@ -36,6 +34,7 @@ void	handler(int sig, siginfo_t *info, void *context)
 	static char	c;
 	static int	pid;
 
+	context = NULL;
 	if (pid != info->si_pid)
 	{
 		c = 0;
@@ -61,12 +60,15 @@ int	main(int argc, char **argv)
 {
 	struct sigaction	sa;
 
-	print_pid(getpid());
-	sa.sa_sigaction = handler;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
-	write(1, "\n", 1);
-	while (1)
-		pause();
+	if (argc == 1 && argv)
+	{
+		print_pid(getpid());
+		sa.sa_sigaction = handler;
+		sigaction(SIGUSR1, &sa, NULL);
+		sigaction(SIGUSR2, &sa, NULL);
+		write(1, "\n", 1);
+		while (1)
+			pause();
+	}
 	return (0);
 }
