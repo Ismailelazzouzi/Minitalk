@@ -36,9 +36,7 @@ void	handler(int sig, siginfo_t *info, void *context)
 	static char	c;
 	static int	pid;
 
-	if (pid == 0)
-		pid = info->si_pid;
-	else if (pid != info->si_pid)
+	if (pid != info->si_pid)
 	{
 		c = 0;
 		i = 0;
