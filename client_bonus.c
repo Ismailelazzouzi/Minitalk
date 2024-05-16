@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: isel-azz <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 12:53:31 by isel-azz          #+#    #+#             */
-/*   Updated: 2024/05/15 12:53:35 by isel-azz         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 int	ft_atoi(const char *str)
 {
@@ -65,16 +53,21 @@ void	handler(int sig, siginfo_t *info, void *context)
 
 int	main(int argc, char **argv)
 {
+	struct sigaction	sa;
 	int					i;
 
 	if (argc == 3)
 	{
 		i = 0;
+		sa.sa_sigaction = handler;
+		sigaction(SIGUSR1, &sa, NULL);
 		while (argv[2][i])
 			send_signals(ft_atoi(argv[1]), argv[2][i++]);
 		send_signals(ft_atoi(argv[1]), '\0');
 	}
 	else
 		write(1, "Error\n", 6);
+	while (1)
+		pause();
 	return (0);
 }

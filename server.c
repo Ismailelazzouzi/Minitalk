@@ -48,8 +48,6 @@ void	handler(int sig, siginfo_t *info, void *context)
 		c = c << 1;
 	else
 	{
-		if (c == '\0')
-			kill(pid, SIGUSR1);
 		write(1, &c, 1);
 		c = 0;
 		i = 0;
